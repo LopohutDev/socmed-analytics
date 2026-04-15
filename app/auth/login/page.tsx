@@ -39,20 +39,75 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">
-            Social Media Analytics
-          </CardTitle>
-          <p className="text-center text-muted-foreground">
-            Sign in to your account
+    <div className="min-h-screen flex">
+      {/* Left panel — branding */}
+      <div className="hidden lg:flex flex-col justify-between w-1/2 bg-primary p-12 text-primary-foreground">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
+          </div>
+          <span className="font-semibold">Analytiq</span>
+        </div>
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold leading-tight">
+            All your social metrics,
+            <br />
+            in one place.
+          </h1>
+          <p className="text-primary-foreground/70 text-lg">
+            Track engagement, reach, and growth across Instagram and TikTok from a single dashboard.
           </p>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <p className="text-primary-foreground/50 text-sm">
+          © {new Date().getFullYear()} Analytiq
+        </p>
+      </div>
+
+      {/* Right panel — form */}
+      <div className="flex flex-1 items-center justify-center bg-background p-8">
+        <div className="w-full max-w-sm space-y-8">
+          {/* Mobile logo */}
+          <div className="flex lg:hidden items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <svg
+                className="w-4 h-4 text-primary-foreground"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
+            </div>
+            <span className="font-semibold">Analytiq</span>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Welcome back</h2>
+            <p className="text-muted-foreground mt-1 text-sm">
+              Sign in to your account to continue
+            </p>
+          </div>
+
           <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
+            <div className="space-y-1.5">
+              <label htmlFor="email" className="block text-sm font-medium">
                 Email
               </label>
               <input
@@ -61,16 +116,13 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 border rounded-md bg-background"
+                className="w-full px-3 py-2.5 border border-input rounded-lg bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1 transition"
                 placeholder="you@example.com"
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium mb-2"
-              >
+            <div className="space-y-1.5">
+              <label htmlFor="password" className="block text-sm font-medium">
                 Password
               </label>
               <input
@@ -79,27 +131,27 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 border rounded-md bg-background"
+                className="w-full px-3 py-2.5 border border-input rounded-lg bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1 transition"
                 placeholder="••••••••"
               />
             </div>
 
             {error && (
-              <div className="p-3 rounded-md bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 text-sm">
+              <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-sm">
                 {error}
               </div>
             )}
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full h-10" disabled={loading}>
               {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>Demo: Use your Supabase test user credentials</p>
-          </div>
-        </CardContent>
-      </Card>
+          <p className="text-center text-xs text-muted-foreground">
+            Use your Supabase test credentials to sign in
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -60,14 +60,16 @@ export function SummaryCards() {
       icon: Heart,
       value: summary.totalEngagement.toLocaleString(),
       description: "Likes + Comments + Shares + Saves",
-      iconColor: "text-muted-foreground",
+      iconBg: "bg-rose-100 dark:bg-rose-950",
+      iconColor: "text-rose-500",
     },
     {
       title: "Avg Engagement Rate",
       icon: BarChart3,
       value: `${summary.averageEngagementRate.toFixed(2)}%`,
       description: "Across all posts",
-      iconColor: "text-muted-foreground",
+      iconBg: "bg-blue-100 dark:bg-blue-950",
+      iconColor: "text-blue-500",
     },
     {
       title: "Top Post",
@@ -80,7 +82,8 @@ export function SummaryCards() {
             summary.topPost.caption || "No caption"
           } (${summary.topPost.likes.toLocaleString()} likes)`
         : "No posts yet",
-      iconColor: "text-muted-foreground",
+      iconBg: "bg-amber-100 dark:bg-amber-950",
+      iconColor: "text-amber-500",
     },
     {
       title: "30-Day Trend",
@@ -89,8 +92,11 @@ export function SummaryCards() {
         1
       )}%`,
       description: "vs previous 30 days",
+      iconBg: trendIsPositive
+        ? "bg-green-100 dark:bg-green-950"
+        : "bg-red-100 dark:bg-red-950",
       iconColor: trendIsPositive ? "text-green-500" : "text-red-500",
-      valueColor: trendIsPositive ? "text-green-500" : "text-red-500",
+      valueColor: trendIsPositive ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400",
     },
   ];
 
@@ -105,27 +111,29 @@ export function SummaryCards() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: i * 0.1 }}
             whileHover={{
-              scale: 1.05,
+              y: -2,
               transition: { duration: 0.2 },
             }}
           >
-            <Card className="h-full">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+            <Card className="h-full border-border/60 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                <CardTitle className="text-sm font-medium text-muted-foreground">
                   {card.title}
                 </CardTitle>
-                <Icon className={`h-4 w-4 ${card.iconColor}`} />
+                <div className={`p-2 rounded-lg ${card.iconBg}`}>
+                  <Icon className={`h-4 w-4 ${card.iconColor}`} />
+                </div>
               </CardHeader>
               <CardContent>
                 <motion.div
-                  className={`text-2xl font-bold ${card.valueColor || ""}`}
+                  className={`text-2xl font-bold tracking-tight ${card.valueColor || "text-foreground"}`}
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: i * 0.1 + 0.2, duration: 0.3 }}
                 >
                   {card.value}
                 </motion.div>
-                <p className="text-xs text-muted-foreground mt-1 truncate">
+                <p className="text-xs text-muted-foreground mt-1.5 truncate">
                   {card.description}
                 </p>
               </CardContent>

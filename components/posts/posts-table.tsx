@@ -57,16 +57,19 @@ export function PostsTable() {
     {
       accessorKey: 'platform',
       header: 'Platform',
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          {row.original.platform === 'instagram' ? (
-            <Instagram className="w-4 h-4" />
-          ) : (
-            <Music className="w-4 h-4" />
-          )}
-          <span className="capitalize">{row.original.platform}</span>
-        </div>
-      ),
+      cell: ({ row }) => {
+        const isInstagram = row.original.platform === 'instagram'
+        return (
+          <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+            isInstagram
+              ? 'bg-pink-100 text-pink-700 dark:bg-pink-950 dark:text-pink-300'
+              : 'bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300'
+          }`}>
+            {isInstagram ? <Instagram className="w-3 h-3" /> : <Music className="w-3 h-3" />}
+            {isInstagram ? 'Instagram' : 'TikTok'}
+          </div>
+        )
+      },
     },
     {
       accessorKey: 'likes',
@@ -124,7 +127,16 @@ export function PostsTable() {
       ),
       cell: ({ row }) => {
         const rate = row.original.engagement_rate
-        return rate !== null ? `${rate.toFixed(2)}%` : 'N/A'
+        if (rate === null) return <span className="text-muted-foreground">N/A</span>
+        const color =
+          rate >= 5 ? 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-400' :
+          rate >= 2 ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400' :
+                      'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-400'
+        return (
+          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${color}`}>
+            {rate.toFixed(2)}%
+          </span>
+        )
       },
     },
     {
@@ -205,13 +217,13 @@ export function PostsTable() {
       </div>
 
       {/* Table */}
-      <div className="rounded-md border overflow-x-auto">
-        <table className="w-full">
+      <div className="rounded-xl border border-border/60 overflow-x-auto shadow-sm bg-card">
+        <table className="w-full text-sm">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id} className="border-b bg-muted/50">
+              <tr key={headerGroup.id} className="border-b bg-muted/40">
                 {headerGroup.headers.map(header => (
-                  <th key={header.id} className="p-4 text-left font-medium">
+                  <th key={header.id} className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wide">
                     {flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
                 ))}
@@ -219,14 +231,14 @@ export function PostsTable() {
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.map(row => (
+            {table.getRowModel().rows.map((row, idx) => (
               <tr
                 key={row.id}
-                className="border-b hover:bg-muted/50 cursor-pointer transition-colors"
+                className={`border-b last:border-0 cursor-pointer transition-colors hover:bg-accent/40 group ${idx % 2 === 0 ? '' : 'bg-muted/20'}`}
                 onClick={() => setSelectedPost(row.original)}
               >
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="p-4">
+                  <td key={cell.id} className="px-4 py-3.5">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
