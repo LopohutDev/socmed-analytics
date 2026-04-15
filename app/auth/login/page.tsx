@@ -67,7 +67,8 @@ export default function LoginPage() {
             in one place.
           </h1>
           <p className="text-primary-foreground/70 text-lg">
-            Track engagement, reach, and growth across Instagram and TikTok from a single dashboard.
+            Track engagement, reach, and growth across Instagram and TikTok from
+            a single dashboard.
           </p>
         </div>
         <p className="text-primary-foreground/50 text-sm">
@@ -147,9 +148,22 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="text-center text-xs text-muted-foreground">
-            Use your Supabase test credentials to sign in
-          </p>
+          <div className="rounded-lg border border-dashed border-border p-4 space-y-2">
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Demo credentials</p>
+            <div className="flex items-center justify-between">
+              <div className="space-y-1 text-sm">
+                <p><span className="text-muted-foreground">Email:</span> <span className="font-mono">test@email.com</span></p>
+                <p><span className="text-muted-foreground">Password:</span> <span className="font-mono">password123</span></p>
+              </div>
+              <button
+                type="button"
+                onClick={() => { setEmail("test@email.com"); setPassword("password123"); }}
+                className="text-xs text-primary hover:underline font-medium"
+              >
+                Fill in
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
