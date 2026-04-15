@@ -27,18 +27,17 @@ export async function GET() {
       )
     }
 
-    // Calculate date range (last 30 days)
-    const now = new Date()
-    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
-
-    // Fetch daily metrics for authenticated user
-    const { data: metrics, error: metricsError } = await supabase
+    // Fetch the most recent 30 daily metric records for the user,
+    // ordered ascending so the chart renders left-to-right chronologically.
+    const { data: recentDesc, error: metricsError } = await supabase
       .from('daily_metrics')
       .select('date, engagement, reach')
       .eq('user_id', user.id)
-      .gte('date', thirtyDaysAgo.toISOString().split('T')[0])
-      .lte('date', now.toISOString().split('T')[0])
-      .order('date', { ascending: true })
+      .order('date', { ascending: false })
+      .limit(30)
+
+    // Reverse so the chart gets oldest → newest
+    const metrics = recentDesc ? [...recentDesc].reverse() : []
 
     if (metricsError) {
       return NextResponse.json(

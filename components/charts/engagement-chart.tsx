@@ -30,7 +30,7 @@ export function EngagementChart() {
           <CardTitle>Engagement Over Time</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[400px] flex items-center justify-center">
+          <div className="h-100 flex items-center justify-center">
             <p className="text-muted-foreground">Loading chart...</p>
           </div>
         </CardContent>
@@ -45,7 +45,7 @@ export function EngagementChart() {
           <CardTitle>Engagement Over Time</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[400px] flex items-center justify-center">
+          <div className="h-100 flex items-center justify-center">
             <p className="text-red-500">Error loading chart data</p>
           </div>
         </CardContent>
@@ -60,7 +60,7 @@ export function EngagementChart() {
           <CardTitle>Engagement Over Time</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-[400px] flex items-center justify-center">
+          <div className="h-100 flex items-center justify-center">
             <p className="text-muted-foreground">
               No data available for the last 30 days
             </p>
@@ -88,7 +88,7 @@ export function EngagementChart() {
     >
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0">
-          <CardTitle>Engagement Over Time (Last 30 Days)</CardTitle>
+          <CardTitle>Engagement Over Time</CardTitle>
           <div className="flex gap-2">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
